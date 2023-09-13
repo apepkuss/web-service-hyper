@@ -44,7 +44,7 @@ pub async fn param_handler(ctx: Context) -> String {
 }
 
 pub async fn chat_completions_handler(mut ctx: Context) -> String {
-    let body: CreateChatCompletionRequest = match ctx.body_json().await {
+    let body: ChatCompletionRequest = match ctx.body_json().await {
         Ok(v) => v,
         Err(e) => {
             panic!("could not parse JSON: {}", e)
@@ -70,7 +70,7 @@ pub async fn chat_completions_handler(mut ctx: Context) -> String {
 }
 
 pub async fn completions_handler(mut ctx: Context) -> String {
-    let body: CreateCompletionRequest = match ctx.body_json().await {
+    let body: CompletionRequest = match ctx.body_json().await {
         Ok(v) => v,
         Err(e) => {
             panic!("could not parse JSON: {}", e)
@@ -88,7 +88,7 @@ pub async fn completions_handler(mut ctx: Context) -> String {
 }
 
 pub async fn embeddings_handler(mut ctx: Context) -> String {
-    let body: CreateEmbeddingsRequest = match ctx.body_json().await {
+    let body: EmbeddingsRequest = match ctx.body_json().await {
         Ok(v) => v,
         Err(e) => {
             panic!("could not parse JSON: {}", e)
