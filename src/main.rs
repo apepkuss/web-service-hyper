@@ -1,4 +1,3 @@
-use bytes::Bytes;
 use hyper::{
     body::to_bytes,
     service::{make_service_fn, service_fn},
@@ -73,7 +72,7 @@ pub struct Context {
     pub state: AppState,
     pub req: Request<Body>,
     pub params: Params,
-    body_bytes: Option<Bytes>,
+    body_bytes: Option<hyper::body::Bytes>,
 }
 
 impl Context {
