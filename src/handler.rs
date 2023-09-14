@@ -44,7 +44,7 @@ pub async fn param_handler(ctx: Context) -> String {
 }
 
 pub async fn chat_completions_handler(mut ctx: Context) -> String {
-    let body: ChatCompletionRequest = match ctx.body_json().await {
+    let body: ChatRequest = match ctx.body_json().await {
         Ok(v) => v,
         Err(e) => {
             panic!("could not parse JSON: {}", e)
