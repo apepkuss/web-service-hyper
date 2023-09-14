@@ -131,14 +131,6 @@ pub async fn chat_completions_handler(mut ctx: Context) -> String {
             ])
             .status()
             .unwrap();
-
-        // let output = std::process::Command::new("curl")
-        //     .arg("https://api.openai.com/v1/models")
-        //     .arg("-H")
-        //     .arg("Authorization: Bearer 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")
-        //     .output()
-        //     .unwrap();
-        // dbg!(&output);
     }
 
     // let _response = Response::new(
