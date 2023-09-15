@@ -1,7 +1,10 @@
 use crate::{Context, Response};
 use hyper::StatusCode;
 use serde::Deserialize;
-use xin::chat::*;
+use xin::chat::{
+    ChatCompletionRequest, ChatCompletionRequestBuilder, ChatCompletionRequestMessage,
+    ChatCompletionRole,
+};
 use xin::completions::*;
 use xin::embeddings::*;
 
@@ -46,7 +49,7 @@ pub async fn param_handler(ctx: Context) -> String {
 }
 
 pub async fn chat_completions_handler(mut ctx: Context) -> String {
-    let body: ChatRequest = match ctx.body_json().await {
+    let body: ChatCompletionRequest = match ctx.body_json().await {
         Ok(v) => v,
         Err(e) => {
             panic!("could not parse JSON: {}", e)
@@ -144,25 +147,25 @@ pub async fn chat_completions_handler(mut ctx: Context) -> String {
     format!("chat completions called")
 }
 
-fn create_chat_request() -> ChatRequest {
+fn create_chat_request() -> ChatCompletionRequest {
     let model = "gpt-4";
     // create messages
-    let mut messages: Vec<ChatRequestMessage> = vec![];
+    let mut messages: Vec<ChatCompletionRequestMessage> = vec![];
     // messages.push(ChatRequestMessage {
     //     role: ChatRequestRole::System,
     //     content: String::from("You are a helpfule assistant."),
     //     name: None,
     //     function_call: None,
     // });
-    messages.push(ChatRequestMessage {
-        role: ChatRequestRole::User,
+    messages.push(ChatCompletionRequestMessage {
+        role: ChatCompletionRole::User,
         content: String::from("What is Bitcoin?"),
         name: None,
         function_call: None,
     });
     // let sampling = ChatRequestSampling::Temperature(0.8);
 
-    ChatRequestBuilder::new(model, messages)
+    ChatCompletionRequestBuilder::new(model, messages)
         // .with_sampling(sampling)
         .build()
 }
@@ -352,7 +355,7 @@ mod openai {
 
         pub async fn chat_completion(
             &self,
-            req: ChatRequest,
+            req: ChatCompletionRequest,
         ) -> Result<(), Box<dyn std::error::Error>> {
             let res = self.post("/chat/completions", &req).await?;
             // let r = res.json::<ChatResponse>();
